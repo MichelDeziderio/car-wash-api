@@ -11,5 +11,9 @@ export const UsersSchema = new mongoose.Schema({
     vehicleModel: String,
     fabrication: String,
     plate: String,
-    count: Number
-}, {timestamps: true, collection: 'users'});
+    count: Number,
+    transactions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'transactions'
+    }],
+}, { timestamps: true, collection: 'users' });

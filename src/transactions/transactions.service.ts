@@ -23,15 +23,15 @@ export class TransactionsService {
   }
 
   async create(createTransactions: TransactionsDto): Promise<Transactions> {
-    const jogadorCriado = new this.transactionsModel(createTransactions);
-    return await jogadorCriado.save();
+    const createdTransaction = new this.transactionsModel(createTransactions);
+    return await createdTransaction.save();
   }
 
   async updateTransaction(_id: string, updateTransaction: TransactionsDto): Promise<void> {
 
-    const findUser = await this.transactionsModel.findOne({ _id }).select('-password').exec();
+    const findTransaction = await this.transactionsModel.findOne({ _id }).select('-password').exec();
 
-    if (!findUser) {
+    if (!findTransaction) {
       throw new BadRequestException(`Transação com o id ${_id} não encontrada!`);
     }
 
