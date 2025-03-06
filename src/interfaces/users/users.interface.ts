@@ -1,3 +1,5 @@
+import { Transactions } from "../transactions/transaction.interface";
+
 export interface Users extends Document {
     readonly _id: string;
     name: string;
@@ -12,4 +14,5 @@ export interface Users extends Document {
     fabrication: string;
     plate: string;
     count: number;
+    transactions: Array<Transactions>;
 }

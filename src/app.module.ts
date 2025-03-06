@@ -4,8 +4,9 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TransactionsModule } from './transactions/transactions.module';
+import { environment } from 'environments/environments';
 
-const urlConnect = 'mongodb+srv://user:passwoard@cluster0.d28yzvq.mongodb.net/carWash';
+const urlConnect = environment.connection;
 
 @Module({
   imports: [

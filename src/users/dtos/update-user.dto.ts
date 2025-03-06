@@ -14,4 +14,5 @@ export class UpdateUserDto {
     readonly vehicleModel: string;
     readonly fabrication: string;
     readonly plate: string;
+    transactions: string[];
 }
