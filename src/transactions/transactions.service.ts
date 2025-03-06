@@ -13,13 +13,36 @@ export class TransactionsService {
   }
 
   async findOne(_id: string): Promise<any> {
-    const findTransaction = await this.transactionsModel.findOne({ _id }).select('-password').exec();
+    const findTransaction = await this.transactionsModel.findOne({ _id }).exec();
 
     if (!findTransaction) {
       throw new BadRequestException(`Transação com o id ${_id} não encontrada!`);
     }
 
     return findTransaction;
+  }
+
+  async findByDate(date: string): Promise<any> {
+
+    if (!date) {
+      throw new BadRequestException('A data é obrigatória!');
+    }
+
+    const startDate = new Date(date);
+
+    const endDate = new Date(date);
+    endDate.setHours(23, 59, 59, 999);
+    endDate.setHours(endDate.getHours() + 21);
+
+    const transactions = await this.transactionsModel.find({
+      createdAt: { $gte: startDate, $lte: endDate },
+    }).exec();
+
+    if (!transactions.length) {
+      throw new BadRequestException(`Nenhuma transação encontrada para a data ${date}!`);
+    }
+
+    return transactions;
   }
 
   async create(createTransactions: TransactionsDto): Promise<Transactions> {
@@ -29,7 +52,7 @@ export class TransactionsService {
 
   async updateTransaction(_id: string, updateTransaction: TransactionsDto): Promise<void> {
 
-    const findTransaction = await this.transactionsModel.findOne({ _id }).select('-password').exec();
+    const findTransaction = await this.transactionsModel.findOne({ _id }).exec();
 
     if (!findTransaction) {
       throw new BadRequestException(`Transação com o id ${_id} não encontrada!`);
